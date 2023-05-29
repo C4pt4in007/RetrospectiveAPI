@@ -1,0 +1,9 @@
+global using NUnit.Framework;
+global using Moq;
+global using RetrospectiveAPI.Service.GetAllRetrospectives;
+global using RetrospectiveAPI.Model;
+global using RetrospectiveAPI.Controllers;
+global using RetrospectiveAPI.Service.CreateRetrospective;
+global using RetrospectiveAPI.Service.GetRetrospectivesByDate;
+global using RetrospectiveAPI.Service.AddFeedback;
+global using Microsoft.AspNetCore.Mvc;
