@@ -15,6 +15,17 @@ builder.Services.AddScoped<ICreateRetrospectiveService, CreateRetrospectiveServi
 builder.Services.AddScoped<IGetAllRetrospectivesService, GetAllRetrospectivesService>();
 builder.Services.AddScoped<IGetRetrospectivesByDate, GetRetrospectivesByDateService>();
 builder.Services.AddScoped<IAddFeedbackService, AddFeedbackService>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -27,6 +38,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseCors();
 
 app.MapControllers();
 

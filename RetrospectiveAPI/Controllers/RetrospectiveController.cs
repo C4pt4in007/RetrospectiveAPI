@@ -72,8 +72,8 @@ namespace RetrospectiveAPI.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-        
-        
+
+        [Consumes("application/json")]
         [HttpPost("retrospective/{Name}/feedback")]
         public IActionResult AddFeedbackToRetrospective(string Name,[FromBody] FeedbackItem feedbackItem)
         {
