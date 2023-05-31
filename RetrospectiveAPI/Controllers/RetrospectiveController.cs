@@ -5,7 +5,9 @@ using RetrospectiveAPI.Service.AddFeedback;
 using RetrospectiveAPI.Service.CreateRetrospective;
 using RetrospectiveAPI.Service.GetAllRetrospectives;
 using RetrospectiveAPI.Service.GetRetrospectivesByDate;
+using RetrospectiveAPI.Service.XMLFormatService;
 using System.Globalization;
+
 
 namespace RetrospectiveAPI.Controllers
 {
@@ -17,13 +19,15 @@ namespace RetrospectiveAPI.Controllers
         private readonly IGetAllRetrospectivesService getAllRetrospectivesService;
         private readonly IGetRetrospectivesByDate getRetrospectivesByDate;
         private readonly IAddFeedbackService addFeedbackService;
+        private readonly IXMLFormatResponseService xMLFormatResponseService;
 
-        public RetrospectiveController(ICreateRetrospectiveService createRetrospectiveService, IGetAllRetrospectivesService getAllRetrospectivesService, IGetRetrospectivesByDate getRetrospectivesByDate, IAddFeedbackService addFeedbackService) 
+        public RetrospectiveController(ICreateRetrospectiveService createRetrospectiveService, IGetAllRetrospectivesService getAllRetrospectivesService, IGetRetrospectivesByDate getRetrospectivesByDate, IAddFeedbackService addFeedbackService, IXMLFormatResponseService xMLFormatResponseService) 
         {
             this.createRetrospectiveService = createRetrospectiveService;
             this.getAllRetrospectivesService = getAllRetrospectivesService;
             this.getRetrospectivesByDate= getRetrospectivesByDate;
             this.addFeedbackService = addFeedbackService;
+            this.xMLFormatResponseService = xMLFormatResponseService;
         }
 
         [Consumes("application/json")]
@@ -43,16 +47,23 @@ namespace RetrospectiveAPI.Controllers
             }            
         }
 
+        
         [HttpGet("retrospectives")]
+        [Produces("application/json", "application/xml")]        
         public IActionResult GetAllRetrospectives() 
         {
-            //string contentType = Request.Headers["Content-Type"].ToString();
             var retrospectives = getAllRetrospectivesService.GetAllRetrospectives();
-            if (retrospectives == null || retrospectives.Count == 0) 
+            if ((Request != null) && Request.Headers["Content-Type"].ToString().Contains("application/xml"))
             {
-                return NotFound();
+                return xMLFormatResponseService.formatResponse(retrospectives);                 
             }
-            return Ok(retrospectives);
+            else {
+                if (retrospectives == null || retrospectives.Count == 0)
+                {
+                    return NotFound();
+                }
+                return Ok(retrospectives);
+            }
         }
 
         [HttpGet("retrospective")]

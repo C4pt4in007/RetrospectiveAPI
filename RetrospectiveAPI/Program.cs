@@ -2,6 +2,7 @@ using RetrospectiveAPI.Service.AddFeedback;
 using RetrospectiveAPI.Service.CreateRetrospective;
 using RetrospectiveAPI.Service.GetAllRetrospectives;
 using RetrospectiveAPI.Service.GetRetrospectivesByDate;
+using RetrospectiveAPI.Service.XMLFormatService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddScoped<ICreateRetrospectiveService, CreateRetrospectiveServi
 builder.Services.AddScoped<IGetAllRetrospectivesService, GetAllRetrospectivesService>();
 builder.Services.AddScoped<IGetRetrospectivesByDate, GetRetrospectivesByDateService>();
 builder.Services.AddScoped<IAddFeedbackService, AddFeedbackService>();
+builder.Services.AddScoped<IXMLFormatResponseService, XMLFormatResponseService>();
 
 builder.Services.AddCors(options =>
 {

@@ -1,4 +1,6 @@
 ﻿#nullable disable
+using RetrospectiveAPI.Service.XMLFormatService;
+
 namespace Tests.Tests
 {
     [TestFixture]
@@ -8,6 +10,7 @@ namespace Tests.Tests
         private Mock<ICreateRetrospectiveService> _createRetrospectiveServiceMock;
         private Mock<IGetRetrospectivesByDate> _getRetrospectiveByDateMock;
         private Mock<IAddFeedbackService> _addFeedbackServiceMock;
+        private Mock<IXMLFormatResponseService> _xmlFormatService;
         private RetrospectiveController _controller;
 
         [SetUp]
@@ -17,7 +20,8 @@ namespace Tests.Tests
             _createRetrospectiveServiceMock = new Mock<ICreateRetrospectiveService>();
             _getRetrospectiveByDateMock = new Mock<IGetRetrospectivesByDate>();
             _addFeedbackServiceMock = new Mock<IAddFeedbackService>();
-            _controller = new RetrospectiveController(_createRetrospectiveServiceMock.Object, _getallRetrospectivesServiceMock.Object, _getRetrospectiveByDateMock.Object, _addFeedbackServiceMock.Object);
+            _xmlFormatService = new Mock<IXMLFormatResponseService>();
+            _controller = new RetrospectiveController(_createRetrospectiveServiceMock.Object, _getallRetrospectivesServiceMock.Object, _getRetrospectiveByDateMock.Object, _addFeedbackServiceMock.Object, _xmlFormatService.Object);
         }
 
 
